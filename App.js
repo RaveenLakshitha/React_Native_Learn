@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
-  const [changedText, setChangedText] = useState('');
-  const [textList, setTextList] = useState([]);
+  const [enteredText, setenteredText] = useState('');
+  const [submitText, setsubmitText] = useState([]);
 
-  const textChanger = (text) => {
-    setChangedText(text);
+  const textEnter = (text) => {
+    setenteredText(text);
   }
 
-  const textDisplay = () => {
-    setTextList(textToShow => [...textToShow, changedText]);
+  const textShow = () => {
+    setsubmitText(textToShow => [...textToShow, { id: Math.random().toString(), value: enteredText }]);
+    /* setsubmitText(textToShow => [...textToShow, { key: Math.random().toString(), value: enteredText }]); */
   }
 
   return (
-    <ScrollView style={styles.screen}>
-
+    <View style={styles.screen}>
       <View
         style={{
           flexDirection: "row",
@@ -25,9 +25,9 @@ export default function App() {
         }}
       >
         <TextInput
-          placeholder="Add a Title"
-          onChangeText={textChanger}
-          value={changedText}
+          placeholder="Add Text"
+          onChangeText={textEnter}
+          value={enteredText}
           style={{
             width: "60%",
             borderColor: "black",
@@ -35,12 +35,10 @@ export default function App() {
             padding: 10
           }}
         />
-        <Button title="Enter" onPress={textDisplay} />
+        <Button title="Enter" onPress={textShow} />
       </View>
-
-      <View >
-        {textList.map(goal => (<View style={styles.listItem} key={goal}><Text >{goal}</Text></View>))}
-      </View>
+      <FlatList keyExtractor={(item, index) => item.id} data={submitText} renderItem={(itemData) => (<View style={styles.listItem}><Text>{itemData.item.value}</Text></View>)}>
+      </FlatList>
 
       <View style={styles.inputContainer}>
         <View style={{ justifyContent: 'center', flex: 3, alignItems: 'center', backgroundColor: 'red' }}>
@@ -53,7 +51,7 @@ export default function App() {
           <Text>3</Text>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
