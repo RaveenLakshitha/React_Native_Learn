@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
   const [changedText, setChangedText] = useState('');
@@ -14,7 +14,7 @@ export default function App() {
   }
 
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
 
       <View
         style={{
@@ -53,7 +53,7 @@ export default function App() {
           <Text>3</Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
