@@ -12,10 +12,17 @@ export default function App() {
     /* setsubmitText(textToShow => [...textToShow, { key: Math.random().toString(), value: enteredText }]); */
   }
 
+  const removeText = (textId) => {
+    setsubmitText((currentText)=>{
+      return currentText.filter((goal) => goal.id !== textId);
+    })
+
+  }
+
   return (
     <View style={styles.screen}>
       <GoalInput onAddGoal={textShow} />
-      <FlatList keyExtractor={(item, index) => item.id} data={submitText} renderItem={itemData => (<GoalItem title={itemData.item.value} />)}>
+      <FlatList keyExtractor={(item, index) => item.id} data={submitText} renderItem={itemData => (<GoalItem id={itemData.item.id} onDelete={removeText} title={itemData.item.value} />)}>
       </FlatList>
 
       <View style={styles.inputContainer}>
