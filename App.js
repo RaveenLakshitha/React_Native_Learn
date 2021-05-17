@@ -1,31 +1,33 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, View } from "react-native";
 import GoalInput from "./Components/GoalInput";
 import GoalItem from "./Components/GoalItem";
 
 export default function App() {
 
   const [submitText, setsubmitText] = useState([]);
+  const [isAddMode, setisAddMode] = useState(false);
 
   const textShow = (enteredText) => {
     setsubmitText(textToShow => [...textToShow, { id: Math.random().toString(), value: enteredText }]);
     /* setsubmitText(textToShow => [...textToShow, { key: Math.random().toString(), value: enteredText }]); */
+    setisAddMode(false)
+
   }
 
-  const removeText = (textId) => {
-    setsubmitText((currentText)=>{
-      return currentText.filter((goal) => goal.id !== textId);
-    })
-
+  const removeText = (textId) =>{
+    setsubmitText(textShow =>{ 
+      return textShow.filter(goal => goal.id !== textId)})
   }
 
   return (
     <View style={styles.screen}>
-      <GoalInput onAddGoal={textShow} />
-      <FlatList keyExtractor={(item, index) => item.id} data={submitText} renderItem={itemData => (<GoalItem id={itemData.item.id} onDelete={removeText} title={itemData.item.value} />)}>
+      <Button title="Add a Goal" onPress={() => setisAddMode(true)}/>
+      <GoalInput onAddGoal={textShow} visible={isAddMode}/>
+      <FlatList keyExtractor={(item, index) => item.id} data={submitText} renderItem={itemData => (<GoalItem  id={itemData.item.id} onDelete={removeText} title={itemData.item.value} />)}>
       </FlatList>
 
-      <View style={styles.inputContainer}>
+      {/* <View style={styles.inputContainer}>
         <View style={{ justifyContent: 'center', flex: 3, alignItems: 'center', backgroundColor: 'red' }}>
           <Text>1</Text>
         </View>
@@ -35,7 +37,7 @@ export default function App() {
         <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'green' }}>
           <Text>3</Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 }

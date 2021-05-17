@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import { Button, Modal, StyleSheet, TextInput, View } from "react-native";
 
 const GoalInput = (props) => {
     const [enteredText, setenteredText] = useState('');
@@ -10,6 +10,7 @@ const GoalInput = (props) => {
     }
 
     return (
+        <Modal visible={props.visible} animationType='slide'>
         <View style={styles.inputText}>
             <TextInput
                 placeholder="Add Text"
@@ -19,18 +20,21 @@ const GoalInput = (props) => {
                     width: "60%",
                     borderColor: "black",
                     borderWidth: 3,
-                    padding: 10
+                    padding: 10,
+                    marginBottom:10
                 }}
             />
             <Button title="Enter" onPress={props.onAddGoal.bind(this, enteredText)} />
         </View>
+        </Modal>
     )
 }
 
 const styles = StyleSheet.create({
     inputText: {
-        flexDirection: "row",
-        justifyContent: "space-between",
+        flex:1,
+        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
         padding: 20
     }
